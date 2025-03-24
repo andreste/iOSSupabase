@@ -33,7 +33,7 @@ struct ContentView: View {
                         // Centered list in a rounded container
                         ScrollView {
                             VStack(spacing: 16) {
-                                ForEach(viewModel.countries) { country in
+                                ForEach(viewModel.countries, id: \.id) { country in
                                     NavigationLink(destination: CountryDetailView(countryName: country.name)) {
                                         VStack(alignment: .leading) {
                                             Text(country.name)
@@ -57,11 +57,6 @@ struct ContentView: View {
                     }
                 }
             }
-//            .onAppear {
-//                Task {
-//                    viewModel.fetchCountries()
-//                }
-//            }
         }
     }
 } 

@@ -6,7 +6,7 @@
 import Foundation
 import Combine
 
-@MainActor // Ensure all updates are on the main thread
+@MainActor
 class CountriesViewModel: ObservableObject {
     @Published var countries: [Country] = []
     @Published var isLoading: Bool = false

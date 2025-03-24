@@ -20,9 +20,3 @@ struct CountryDetailView: View {
         .navigationBarTitleDisplayMode(.inline) // Display title inline
     }
 }
-
-struct CountryDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        CountryDetailView(countryName: "Sample Country")
-    }
-} 
