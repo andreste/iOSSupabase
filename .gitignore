@@ -1,7 +1,7 @@
 # Xcode specific
 .DS_Store
 UserInterfaceState.xcuserstate
-xcuserdata/
+*.xcuserdata
 
 # Derived data
 DerivedData/
