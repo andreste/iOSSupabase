@@ -1,0 +1,51 @@
+# Xcode specific
+.DS_Store
+UserInterfaceState.xcuserstate
+xcuserdata/
+
+# Derived data
+DerivedData/
+*.xcworkspace/
+!default.xcworkspace/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# CocoaPods
+Pods/
+*.lock
+*.xcscmblueprint
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# Temporary files
+*.swp
+*.swo
+*.DS_Store
+*.lock
+
+# Certificates & Secrets
+*.key
+*.pem
+*.mobileprovision
+*.cer
+*.p12
+fastlane/credentials.json
+
+# Bundler
+.bundle/
+
+# Playgrounds
+playground.xcworkspace/
+
+# Ignore environment files
+.env
+
