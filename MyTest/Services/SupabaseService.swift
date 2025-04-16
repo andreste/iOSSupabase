@@ -9,8 +9,11 @@ import Supabase
 class SupabaseService {
     private let client: SupabaseClient
 
-    init(supabaseUrl: URL, supabaseKey: String) {
-        self.client = SupabaseClient(supabaseURL: supabaseUrl, supabaseKey: supabaseKey)
+    init() {
+        self.client = SupabaseClient(
+            supabaseURL: Config.Supabase.url,
+            supabaseKey: Config.Supabase.apiKey
+        )
     }
 
     func fetchCountries() async throws -> [Country] {
