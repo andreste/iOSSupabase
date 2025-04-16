@@ -35,9 +35,22 @@
 		EDF48C172D91F500009F1C19 /* MyTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EDD723B02DB0073C00AE7F16 /* Exceptions for "MyTest" folder in "MyTest" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = EDF48BFC2D91F4FE009F1C19 /* MyTest */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EDF48BFF2D91F4FE009F1C19 /* MyTest */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EDD723B02DB0073C00AE7F16 /* Exceptions for "MyTest" folder in "MyTest" target */,
+			);
 			path = MyTest;
 			sourceTree = "<group>";
 		};
@@ -415,6 +428,8 @@
 				DEVELOPMENT_TEAM = GB7AG2E4X2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyTest/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This app needs to connect to local devices on your network to function properly.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -444,6 +459,8 @@
 				DEVELOPMENT_TEAM = GB7AG2E4X2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyTest/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This app needs to connect to local devices on your network to function properly.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
