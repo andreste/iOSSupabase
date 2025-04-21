@@ -3,10 +3,7 @@ import SwiftUI
 struct AddCountryView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var viewModel: AddCountryViewModel
-<<<<<<< HEAD
-=======
     var onCountryAdded: ((Country) -> Void)?
->>>>>>> b84f165 (commit stash)
     
     var body: some View {
         NavigationStack {
