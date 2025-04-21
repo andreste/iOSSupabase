@@ -12,10 +12,10 @@ class CountriesViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
-    private let supabaseService: SupabaseService
+    var countryService: CountryService
     
-    init() {
-        self.supabaseService = ServiceContainer.shared.supabaseService
+    init(countryService: CountryService) {
+        self.countryService = countryService
         fetchCountries()
     }
     
@@ -23,7 +23,7 @@ class CountriesViewModel: ObservableObject {
         isLoading = true
         Task {
             do {
-                countries = try await supabaseService.fetchCountries()
+                countries = try await countryService.fetchCountries()
             } catch {
                 errorMessage = "Failed to fetch countries: \(error.localizedDescription)"
             }

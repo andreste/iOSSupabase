@@ -6,9 +6,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = CountriesViewModel()
+    @Environment(AppEnvironment.self) private var environment
+    @StateObject private var viewModel: CountriesViewModel
     @State private var showingAddCountry = false
-
+    
+    init() {
+        // Initialize with a temporary service, will be updated in onAppear
+        _viewModel = StateObject(wrappedValue: CountriesViewModel(countryService: SupabaseService()))
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -66,10 +72,15 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $showingAddCountry) {
-                AddCountryView(viewModel: AddCountryViewModel())
+                AddCountryView(viewModel: AddCountryViewModel(countryService: environment.countryService))
                     .onDisappear {
                         viewModel.fetchCountries()
                     }
+            }
+            .onAppear {
+                // Update the view model with the environment's service
+                viewModel.countryService = environment.countryService
+                viewModel.fetchCountries()
             }
         }
     }

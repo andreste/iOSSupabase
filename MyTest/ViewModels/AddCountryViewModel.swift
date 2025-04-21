@@ -8,10 +8,10 @@ final class AddCountryViewModel {
     var isLoading: Bool = false
     var errorMessage: String?
     
-    private let supabaseService: SupabaseService
+    private let countryService: CountryService
     
-    init() {
-        self.supabaseService = ServiceContainer.shared.supabaseService
+    init(countryService: CountryService) {
+        self.countryService = countryService
     }
     
     func saveCountry() async throws {
@@ -24,7 +24,7 @@ final class AddCountryViewModel {
         defer { isLoading = false }
         
         do {
-            try await supabaseService.addCountry(name: name, isVisited: isVisited)
+            try await countryService.addCountry(name: name, isVisited: isVisited)
         } catch {
             errorMessage = "Failed to save country: \(error.localizedDescription)"
             throw error
