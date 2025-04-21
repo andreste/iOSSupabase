@@ -12,7 +12,7 @@ class CountriesViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
-    var countryService: CountryService
+    let countryService: CountryService
     
     init(countryService: CountryService) {
         self.countryService = countryService
