@@ -25,12 +25,19 @@ class SupabaseService {
         return fetchedCountries
     }
     
-    func addCountry(name: String, isVisited: Bool) async throws {
-        let newCountry = Country(name: name, isVisited: isVisited)
+    func addCountry(name: String, isVisited: Bool, latitude: Double, longitude: Double) async throws {
+        let country = Country(
+            id: nil,
+            name: name,
+            isVisited: isVisited,
+            latitude: latitude,
+            longitude: longitude
+        )
         
-        _ = try await client
+        let query = try client
             .from("countries")
-            .insert(newCountry)
-            .execute()
+            .insert(country)
+        
+        _ = try await query.execute()
     }
 }

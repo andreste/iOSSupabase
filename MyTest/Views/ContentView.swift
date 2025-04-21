@@ -37,7 +37,7 @@ struct ContentView: View {
                         ScrollView {
                             VStack(spacing: 12) {
                                 ForEach(viewModel.countries, id: \.id) { country in
-                                    NavigationLink(destination: CountryDetailView(countryName: country.name)) {
+                                    NavigationLink(destination: CountryDetailView(country: country)) {
                                         CountryCardView(country: country)
                                     }
                                     .buttonStyle(PlainButtonStyle())

@@ -9,12 +9,12 @@ final class AddCountryViewModel {
     var errorMessage: String?
     
     private let countryService: CountryService
+    private let geocodingService = GeocodingService()
     
     init(countryService: CountryService) {
         self.countryService = countryService
     }
     
-
     func saveCountry() async throws -> Country {
         guard !name.isEmpty else {
             errorMessage = "Country name cannot be empty"
@@ -25,12 +25,25 @@ final class AddCountryViewModel {
         defer { isLoading = false }
         
         do {
-            try await countryService.addCountry(name: name, isVisited: isVisited)
-
-            // Create a new country object with the provided data
-            // Note: The id will be set by Supabase, but we don't need it for this purpose
-            return Country(id: nil, name: name, isVisited: isVisited)
-
+            // Get coordinates for the country
+            let coordinates = try await geocodingService.getCoordinates(for: name)
+            
+            // Add country to Supabase
+            try await countryService.addCountry(
+                name: name,
+                isVisited: isVisited,
+                latitude: coordinates.latitude,
+                longitude: coordinates.longitude
+            )
+            
+            // Create and return the new country object
+            return Country(
+                id: nil,
+                name: name,
+                isVisited: isVisited,
+                latitude: coordinates.latitude,
+                longitude: coordinates.longitude
+            )
         } catch {
             errorMessage = "Failed to save country: \(error.localizedDescription)"
             throw error
