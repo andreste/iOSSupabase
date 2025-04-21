@@ -14,10 +14,11 @@ final class AddCountryViewModel {
         self.countryService = countryService
     }
     
-    func saveCountry() async throws {
+
+    func saveCountry() async throws -> Country {
         guard !name.isEmpty else {
             errorMessage = "Country name cannot be empty"
-            return
+            throw NSError(domain: "AddCountryViewModel", code: -1, userInfo: [NSLocalizedDescriptionKey: "Country name cannot be empty"])
         }
         
         isLoading = true
@@ -25,6 +26,11 @@ final class AddCountryViewModel {
         
         do {
             try await countryService.addCountry(name: name, isVisited: isVisited)
+
+            // Create a new country object with the provided data
+            // Note: The id will be set by Supabase, but we don't need it for this purpose
+            return Country(id: nil, name: name, isVisited: isVisited)
+
         } catch {
             errorMessage = "Failed to save country: \(error.localizedDescription)"
             throw error

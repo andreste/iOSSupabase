@@ -30,4 +30,9 @@ class CountriesViewModel: ObservableObject {
             isLoading = false
         }
     }
+    
+    func appendCountry(_ country: Country) {
+        // Add the new country to the beginning of the list
+        countries.append(country)
+    }
 }

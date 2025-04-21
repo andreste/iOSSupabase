@@ -72,10 +72,9 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $showingAddCountry) {
-                AddCountryView(viewModel: AddCountryViewModel(countryService: environment.countryService))
-                    .onDisappear {
-                        viewModel.fetchCountries()
-                    }
+                AddCountryView(viewModel: AddCountryViewModel(countryService: environment.countryService)) { newCountry in
+                    viewModel.appendCountry(newCountry)
+                }
             }
             .onAppear {
                 // Update the view model with the environment's service

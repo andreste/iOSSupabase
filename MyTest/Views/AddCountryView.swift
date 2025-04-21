@@ -3,6 +3,10 @@ import SwiftUI
 struct AddCountryView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var viewModel: AddCountryViewModel
+<<<<<<< HEAD
+=======
+    var onCountryAdded: ((Country) -> Void)?
+>>>>>>> b84f165 (commit stash)
     
     var body: some View {
         NavigationStack {
@@ -36,7 +40,8 @@ struct AddCountryView: View {
                     Button("Save") {
                         Task {
                             do {
-                                try await viewModel.saveCountry()
+                                let newCountry = try await viewModel.saveCountry()
+                                onCountryAdded?(newCountry)
                                 dismiss()
                             } catch {
                                 // Error is handled by the view model
