@@ -20,7 +20,6 @@ When generating code, finding bugs, or optimizing SwiftUI projects, follow these
 - Fully implement all requested functionality.
 - Leave NO TODOs, placeholders, or missing pieces.
 - Be concise. Minimize any other prose.
-- If you think there might not be a correct answer, say so. If you do not know the
 
 ## 1. State Management
 
