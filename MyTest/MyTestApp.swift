@@ -7,10 +7,12 @@ import SwiftUI
 
 @main
 struct MyTestApp: App {
+    @State private var environment = AppEnvironment()
+    
     var body: some Scene {
         WindowGroup {
-            let supabaseService = SupabaseService()
-            ContentView(viewModel: CountriesViewModel(supabaseService: supabaseService))
+            ContentView()
+                .environment(environment)
         }
     }
 }
