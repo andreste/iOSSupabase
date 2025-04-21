@@ -22,17 +22,17 @@ struct CountryDetailView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Map View
+            // Map View - Takes up all available space
             Map(position: .constant(region)) {
                 Marker(country.name, coordinate: CLLocationCoordinate2D(
                     latitude: country.latitude,
                     longitude: country.longitude
                 ))
             }
-            .mapStyle(.standard)
-            .frame(height: 300)
+            .mapStyle(.hybrid)
+            .ignoresSafeArea()
             
-            // Country Info
+            // Country Info - Fixed height at the bottom
             VStack(spacing: 16) {
                 Text(country.name)
                     .font(.largeTitle)
