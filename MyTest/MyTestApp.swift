@@ -7,7 +7,7 @@ import SwiftUI
 
 @main
 struct MyTestApp: App {
-    @StateObject private var environment = AppEnvironment()
+    @State private var environment = AppEnvironment()
     
     var body: some Scene {
         WindowGroup {
