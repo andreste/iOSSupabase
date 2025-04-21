@@ -9,6 +9,7 @@ UserInterfaceState.xcuserstate
 DerivedData/
 *.xcworkspace/
 !default.xcworkspace/
+MyTest.xcodeproj/project.xcworkspace/
 
 # Swift Package Manager
 .build/
