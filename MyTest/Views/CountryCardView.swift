@@ -17,7 +17,7 @@ struct CountryCardView: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
                     
-                    if country.is_visited {
+                    if country.isVisited {
                         HStack(spacing: 4) {
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundColor(.green)

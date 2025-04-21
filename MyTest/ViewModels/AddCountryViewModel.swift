@@ -4,7 +4,7 @@ import SwiftUI
 @Observable
 final class AddCountryViewModel {
     var name: String = ""
-    var is_visited: Bool = false
+    var isVisited: Bool = false
     var isLoading: Bool = false
     var errorMessage: String?
     
@@ -24,7 +24,7 @@ final class AddCountryViewModel {
         defer { isLoading = false }
         
         do {
-            try await supabaseService.addCountry(name: name, is_visited: is_visited)
+            try await supabaseService.addCountry(name: name, isVisited: isVisited)
         } catch {
             errorMessage = "Failed to save country: \(error.localizedDescription)"
             throw error

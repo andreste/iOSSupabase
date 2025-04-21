@@ -13,7 +13,7 @@ struct AddCountryView: View {
                 }
                 
                 Section {
-                    Toggle("I've visited this place", isOn: $viewModel.is_visited)
+                    Toggle("I've visited this place", isOn: $viewModel.isVisited)
                 }
                 
                 if let errorMessage = viewModel.errorMessage {
