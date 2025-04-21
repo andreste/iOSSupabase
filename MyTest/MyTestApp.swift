@@ -9,8 +9,7 @@ import SwiftUI
 struct MyTestApp: App {
     var body: some Scene {
         WindowGroup {
-            let supabaseService = SupabaseService()
-            ContentView(viewModel: CountriesViewModel(supabaseService: supabaseService))
+            ContentView()
         }
     }
 }

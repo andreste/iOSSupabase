@@ -6,11 +6,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel: CountriesViewModel
-
-    init(viewModel: CountriesViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
+    @StateObject private var viewModel = CountriesViewModel()
+    @State private var showingAddCountry = false
 
     var body: some View {
         NavigationStack {
@@ -32,30 +29,47 @@ struct ContentView: View {
                     } else {
                         // Centered list in a rounded container
                         ScrollView {
-                            VStack(spacing: 16) {
+                            VStack(spacing: 12) {
                                 ForEach(viewModel.countries, id: \.id) { country in
                                     NavigationLink(destination: CountryDetailView(countryName: country.name)) {
-                                        VStack(alignment: .leading) {
-                                            Text(country.name)
-                                                .font(.title2) // Increased font size
-                                                .fontWeight(.bold)
-                                                .padding()
-                                        }
-                                        .frame(maxWidth: .infinity)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 15)
-                                                .fill(Color.white.opacity(0.9)) // Semi-transparent background
-                                                .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2) // Subtle shadow
-                                        )
-                                        .padding(.horizontal)
+                                        CountryCardView(country: country)
                                     }
+                                    .buttonStyle(PlainButtonStyle())
+                                    .padding(.horizontal)
                                 }
                             }
-                            .padding(8) // Set outer VStack to full width with padding of 8
+                            .padding(.vertical, 8)
                         }
-                        .frame(maxWidth: .infinity)
                     }
                 }
+                
+                // Floating Action Button
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button {
+                            showingAddCountry = true
+                        } label: {
+                            Image(systemName: "plus")
+                                .font(.title2.weight(.semibold))
+                                .foregroundColor(.white)
+                                .frame(width: 56, height: 56)
+                                .background(Color.blue)
+                                .clipShape(Circle())
+                                .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 3)
+                        }
+                        .padding()
+                        .scaleEffect(showingAddCountry ? 0.9 : 1.0)
+                        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: showingAddCountry)
+                    }
+                }
+            }
+            .sheet(isPresented: $showingAddCountry) {
+                AddCountryView(viewModel: AddCountryViewModel())
+                    .onDisappear {
+                        viewModel.fetchCountries()
+                    }
             }
         }
     }

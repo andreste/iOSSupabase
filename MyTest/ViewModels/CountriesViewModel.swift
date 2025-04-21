@@ -14,8 +14,8 @@ class CountriesViewModel: ObservableObject {
     
     private let supabaseService: SupabaseService
     
-    init(supabaseService: SupabaseService) {
-        self.supabaseService = supabaseService
+    init() {
+        self.supabaseService = ServiceContainer.shared.supabaseService
         fetchCountries()
     }
     
