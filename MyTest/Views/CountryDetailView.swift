@@ -8,6 +8,8 @@ import MapKit
 
 struct CountryDetailView: View {
     var country: Country
+    let namespace: Namespace.ID
+    var onDismiss: () -> Void
     
     private var region: MapCameraPosition {
         let coordinate = CLLocationCoordinate2D(
@@ -22,7 +24,26 @@ struct CountryDetailView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Map View - Takes up all available space
+            // Top navigation bar
+            HStack {
+                Button(action: onDismiss) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                    }
+                    .foregroundColor(.blue)
+                }
+                .padding()
+                
+                Spacer()
+                
+                Text("Country Details")
+                    .font(.headline)
+                
+                Spacer()
+            }
+            
+            // Map View
             Map(position: .constant(region)) {
                 Marker(country.name, coordinate: CLLocationCoordinate2D(
                     latitude: country.latitude,
@@ -30,26 +51,31 @@ struct CountryDetailView: View {
                 ))
             }
             .mapStyle(.hybrid)
-            .ignoresSafeArea()
+            .frame(maxWidth: .infinity)
+            .frame(height: UIScreen.main.bounds.height * 0.5)
             
-            // Country Info - Fixed height at the bottom
+            // Country Info at bottom
             VStack(spacing: 16) {
                 Text(country.name)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
+                    .matchedGeometryEffect(id: "countryName_\(country.name)", in: namespace)
                 
                 HStack {
                     Image(systemName: country.isVisited ? "checkmark.circle.fill" : "circle")
                         .foregroundColor(country.isVisited ? .green : .gray)
                     Text(country.isVisited ? "Visited" : "Not Visited")
                         .foregroundColor(country.isVisited ? .green : .gray)
+                        .font(.subheadline)
                 }
-                .font(.title3)
             }
             .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.white)
         }
-        .navigationTitle("Country Details")
-        .navigationBarTitleDisplayMode(.inline)
+        .frame(maxHeight: .infinity, alignment: .top)
+        .background(Color.white)
     }
 }

@@ -9,19 +9,21 @@ struct ContentView: View {
     @Environment(AppEnvironment.self) private var environment
     @StateObject private var viewModel: CountriesViewModel
     @State private var showingAddCountry = false
+    @Namespace private var animation
+    @State private var selectedCountry: Country? = nil
     
     init() {
-        // Initialize with a temporary service, will be updated in onAppear
         _viewModel = StateObject(wrappedValue: CountriesViewModel(countryService: SupabaseService()))
     }
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                // Background gradient
-                LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.3)]), startPoint: .top, endPoint: .bottom)
-                    .edgesIgnoringSafeArea(.all)
-
+        ZStack {
+            // Background gradient
+            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.3)]), startPoint: .top, endPoint: .bottom)
+                .edgesIgnoringSafeArea(.all)
+            
+            if selectedCountry == nil {
+                // Main list view
                 VStack {
                     if viewModel.isLoading {
                         ProgressView()
@@ -37,11 +39,13 @@ struct ContentView: View {
                         ScrollView {
                             VStack(spacing: 12) {
                                 ForEach(viewModel.countries, id: \.id) { country in
-                                    NavigationLink(destination: CountryDetailView(country: country)) {
-                                        CountryCardView(country: country)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                    .padding(.horizontal)
+                                    CountryCardView(country: country, namespace: animation)
+                                        .onTapGesture {
+                                            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                                                selectedCountry = country
+                                            }
+                                        }
+                                        .padding(.horizontal)
                                 }
                             }
                             .padding(.vertical, 8)
@@ -70,17 +74,28 @@ struct ContentView: View {
                         .animation(.spring(response: 0.3, dampingFraction: 0.6), value: showingAddCountry)
                     }
                 }
-            }
-            .sheet(isPresented: $showingAddCountry) {
-                AddCountryView(viewModel: AddCountryViewModel(countryService: environment.countryService)) { newCountry in
-                    viewModel.appendCountry(newCountry)
-                }
-            }
-            .onAppear {
-                // Update the view model with the environment's service
-                viewModel.countryService = environment.countryService
-                viewModel.fetchCountries()
+            } else if let country = selectedCountry {
+                // Detail view
+                CountryDetailView(
+                    country: country,
+                    namespace: animation,
+                    onDismiss: {
+                        withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                            selectedCountry = nil
+                        }
+                    }
+                )
             }
         }
+        .sheet(isPresented: $showingAddCountry) {
+            AddCountryView(viewModel: AddCountryViewModel(countryService: environment.countryService)) { newCountry in
+                viewModel.appendCountry(newCountry)
+            }
+        }
+        .onAppear {
+            // Update the view model with the environment's service
+            viewModel.countryService = environment.countryService
+            viewModel.fetchCountries()
+        }
     }
-} 
+}

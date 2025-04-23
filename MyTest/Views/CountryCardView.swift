@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CountryCardView: View {
     let country: Country
+    let namespace: Namespace.ID
     
     var body: some View {
         HStack(spacing: 12) {
@@ -12,9 +13,10 @@ struct CountryCardView: View {
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(country.name)
-                        .font(.headline)
+                        .font(.title)
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
+                        .matchedGeometryEffect(id: "countryName_\(country.name)", in: namespace, isSource: true)
                     
                     if country.isVisited {
                         HStack(spacing: 4) {
@@ -22,7 +24,7 @@ struct CountryCardView: View {
                                 .foregroundColor(.green)
                                 .font(.caption)
                             Text("Visited")
-                                .font(.caption)
+                                .font(.subheadline)
                                 .foregroundColor(.green)
                         }
                     }
