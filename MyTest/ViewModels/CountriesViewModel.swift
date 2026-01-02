@@ -24,7 +24,12 @@ class CountriesViewModel: ObservableObject {
     func fetchCountries() async {
         isLoading = true
         do {
-            countries = try await countryService.fetchCountries()
+            let fetched = try await countryService.fetchCountries()
+            if countries != fetched {
+                countries = [] // Force UI update via empty assignment
+                await Task.yield() // Yield so SwiftUI can process change
+            }
+            countries = fetched
             errorMessage = nil
         } catch {
             errorMessage = "Failed to fetch countries: \(error.localizedDescription)"

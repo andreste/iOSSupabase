@@ -17,12 +17,16 @@ class SupabaseService {
     }
 
     func fetchCountries() async throws -> [Country] {
-        let fetchedCountries: [Country] = try await client
-            .from("Countries")
-            .select()
-            .execute()
-            .value
-        return fetchedCountries
+        do {
+            let fetchedCountries: [Country] = try await client
+                .from("Countries")
+                .select()
+                .execute()
+                .value
+            return fetchedCountries
+        } catch {
+            throw error
+        }
     }
     
     func addCountry(name: String, isVisited: Bool, latitude: Double, longitude: Double) async throws {
