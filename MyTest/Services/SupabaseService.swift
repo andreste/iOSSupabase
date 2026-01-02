@@ -8,25 +8,22 @@ import Supabase
 
 class SupabaseService {
     private let client: SupabaseClient
-
+    
     init() {
         self.client = SupabaseClient(
             supabaseURL: Config.Supabase.url,
             supabaseKey: Config.Supabase.apiKey
         )
     }
-
+    
     func fetchCountries() async throws -> [Country] {
-        do {
-            let fetchedCountries: [Country] = try await client
-                .from("Countries")
-                .select()
-                .execute()
-                .value
-            return fetchedCountries
-        } catch {
-            throw error
-        }
+        let fetchedCountries: [Country] = try await client
+            .from("Countries")
+            .select()
+            .order("created_at", ascending: true)
+            .execute()
+            .value
+        return fetchedCountries
     }
     
     func addCountry(name: String, isVisited: Bool, latitude: Double, longitude: Double) async throws {
