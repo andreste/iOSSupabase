@@ -25,11 +25,13 @@ struct ContentView: View {
             if selectedCountry == nil {
                 // Main list view
                 VStack {
-                    if viewModel.isLoading {
+                    if viewModel.isLoading && viewModel.countries.isEmpty {
+                        // Only show loading indicator on initial load when list is empty
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
                             .padding()
-                    } else if let errorMessage = viewModel.errorMessage {
+                    } else if let errorMessage = viewModel.errorMessage, viewModel.countries.isEmpty {
+                        // Only show error message if list is empty
                         Text(errorMessage)
                             .foregroundColor(.red)
                             .font(.headline)
@@ -49,6 +51,11 @@ struct ContentView: View {
                                 }
                             }
                             .padding(.vertical, 8)
+                        }
+                        .refreshable {
+                            Task.detached {
+                                await viewModel.fetchCountries()
+                            }
                         }
                     }
                 }
@@ -95,7 +102,9 @@ struct ContentView: View {
         .onAppear {
             // Update the view model with the environment's service
             viewModel.countryService = environment.countryService
-            viewModel.fetchCountries()
+            Task {
+                await viewModel.fetchCountries()
+            }
         }
     }
 }

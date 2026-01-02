@@ -16,19 +16,25 @@ class CountriesViewModel: ObservableObject {
     
     init(countryService: CountryService) {
         self.countryService = countryService
-        fetchCountries()
+        Task {
+            await fetchCountries()
+        }
     }
     
-    func fetchCountries() {
+    func fetchCountries() async {
         isLoading = true
-        Task {
-            do {
-                countries = try await countryService.fetchCountries()
-            } catch {
-                errorMessage = "Failed to fetch countries: \(error.localizedDescription)"
+        do {
+            let fetched = try await countryService.fetchCountries()
+            if countries != fetched {
+                countries = [] // Force UI update via empty assignment
+                await Task.yield() // Yield so SwiftUI can process change
             }
-            isLoading = false
+            countries = fetched
+            errorMessage = nil
+        } catch {
+            errorMessage = "Failed to fetch countries: \(error.localizedDescription)"
         }
+        isLoading = false
     }
     
     func appendCountry(_ country: Country) {

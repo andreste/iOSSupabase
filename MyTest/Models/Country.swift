@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct Country: Identifiable, Decodable, Encodable {
+struct Country: Identifiable, Decodable, Encodable, Equatable {
     var id: Int?
     var name: String
     var isVisited: Bool
