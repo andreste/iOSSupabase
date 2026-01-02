@@ -18,7 +18,7 @@ class SupabaseService {
 
     func fetchCountries() async throws -> [Country] {
         let fetchedCountries: [Country] = try await client
-            .from("countries")
+            .from("Countries")
             .select()
             .execute()
             .value
@@ -35,7 +35,7 @@ class SupabaseService {
         )
         
         let query = try client
-            .from("countries")
+            .from("Countries")
             .insert(country)
         
         _ = try await query.execute()

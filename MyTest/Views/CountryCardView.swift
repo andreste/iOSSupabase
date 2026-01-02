@@ -16,7 +16,7 @@ struct CountryCardView: View {
                         .font(.title)
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
-                        .matchedGeometryEffect(id: "countryName_\(country.name)", in: namespace, isSource: true)
+                        .matchedGeometryEffect(id: "countryName_\(country.uniqueId)", in: namespace, isSource: true)
                     
                     if country.isVisited {
                         HStack(spacing: 4) {

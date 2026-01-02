@@ -61,7 +61,7 @@ struct CountryDetailView: View {
                     .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
-                    .matchedGeometryEffect(id: "countryName_\(country.name)", in: namespace)
+                    .matchedGeometryEffect(id: "countryName_\(country.uniqueId)", in: namespace)
                 
                 HStack {
                     Image(systemName: country.isVisited ? "checkmark.circle.fill" : "circle")

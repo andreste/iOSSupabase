@@ -38,7 +38,7 @@ struct ContentView: View {
                         // Centered list in a rounded container
                         ScrollView {
                             VStack(spacing: 12) {
-                                ForEach(viewModel.countries, id: \.id) { country in
+                                ForEach(viewModel.countries, id: \.uniqueId) { country in
                                     CountryCardView(country: country, namespace: animation)
                                         .onTapGesture {
                                             withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {

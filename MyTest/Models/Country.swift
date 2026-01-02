@@ -19,4 +19,14 @@ struct Country: Identifiable, Decodable, Encodable {
         case latitude
         case longitude
     }
+    
+    // Computed property to ensure unique identifier for ForEach
+    var uniqueId: String {
+        if let id = id {
+            return "\(id)"
+        } else {
+            // Fallback to a combination of name and coordinates for uniqueness
+            return "\(name)_\(latitude)_\(longitude)"
+        }
+    }
 }
