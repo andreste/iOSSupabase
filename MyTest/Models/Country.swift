@@ -11,6 +11,7 @@ struct Country: Identifiable, Decodable, Encodable, Equatable {
     var isVisited: Bool
     var latitude: Double
     var longitude: Double
+    var createdAt: Date?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -18,6 +19,7 @@ struct Country: Identifiable, Decodable, Encodable, Equatable {
         case isVisited = "is_visited"
         case latitude
         case longitude
+        case createdAt = "created_at"
     }
     
     // Computed property to ensure unique identifier for ForEach

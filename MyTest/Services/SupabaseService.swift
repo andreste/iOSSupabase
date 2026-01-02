@@ -21,6 +21,7 @@ class SupabaseService {
             let fetchedCountries: [Country] = try await client
                 .from("Countries")
                 .select()
+                .order("created_at", ascending: true)
                 .execute()
                 .value
             return fetchedCountries
