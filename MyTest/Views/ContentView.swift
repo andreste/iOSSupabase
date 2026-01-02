@@ -50,6 +50,9 @@ struct ContentView: View {
                             }
                             .padding(.vertical, 8)
                         }
+                        .refreshable {
+                            await viewModel.fetchCountries()
+                        }
                     }
                 }
                 
@@ -95,7 +98,9 @@ struct ContentView: View {
         .onAppear {
             // Update the view model with the environment's service
             viewModel.countryService = environment.countryService
-            viewModel.fetchCountries()
+            Task {
+                await viewModel.fetchCountries()
+            }
         }
     }
 }
